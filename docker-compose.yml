@@ -1,0 +1,30 @@
+services:
+  python-on-gsheets:
+    &common
+      build: .
+      container_name: automate_gsheets
+      restart: unless-stopped
+      environment:
+        GOOGLE_SHEET_FILE: "Copy of weight tracking"
+        GRAPHS_SHEET_NAME: "graphs"
+        # Run every day at 06:00  "0 6 * * *"
+        CRON_SCHEDULE: "*/3 * * * *"
+      volumes:
+        - ./credentials/google_creds.json:/app/src/credentials/google_creds.json:ro
+        - ./credentials/strava_creds.ini:/app/src/credentials/strava_creds.ini:rw
+
+  python-on-gsheets-dev:
+    <<: *common
+    profiles: ["dev"]
+    build: .
+    container_name: automate_gsheets_dev
+    restart: unless-stopped
+    environment:
+      GOOGLE_SHEET_FILE: "Copy of weight tracking"
+      GRAPHS_SHEET_NAME: "graphs"
+    volumes:
+      - ./credentials/google_creds.json:/app/src/credentials/google_creds.json:ro
+      - ./credentials/strava_creds.ini:/app/src/credentials/strava_creds.ini:rw
+      - ./src:/app/src:rw
+    entrypoint: "tail -f /dev/null"
+
