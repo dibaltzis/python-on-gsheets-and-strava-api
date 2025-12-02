@@ -1,6 +1,6 @@
 # python-on-gsheets-and-strava-api
 
-This project automates fetching activity data from Strava, updating a Google Sheet with new activity tables, and generating charts (e.g., "Weight over Time") using Python—completely hands-free.
+Automates fetching activity data from Strava, updating a Google Sheet with new activity tables, and generating charts (e.g., "Weight over Time") using Python—completely hands-free.
 
 It follows this process:
 ![Horizontal workflow: Smart Band → Mi Fitness → Strava → Python App → Google Sheets ...](h-flowchart-diagram.svg)
