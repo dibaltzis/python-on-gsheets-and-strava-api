@@ -1,4 +1,4 @@
-# automate-figures-and-graphs-on-google-sheets-with-python
+# python-on-gsheets-and-strava-api
 
 This project automates fetching activity data from Strava, updating a Google Sheet with new activity tables, and generating charts (e.g., "Weight over Time") using Python—completely hands-free.
 
@@ -75,7 +75,7 @@ docker compose logs -f python-on-gsheets
 ### Deployment
 1. **Clone the repository**  
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/dibaltzis/python-on-gsheets-and-strava-api.git
    cd automate-figures-and-graphs-on-google-sheets-with-python
    ```
 2. **Add your credentials**  
