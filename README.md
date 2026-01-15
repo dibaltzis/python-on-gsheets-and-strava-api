@@ -1,6 +1,6 @@
-# python-on-gsheets-and-strava-api
+# automate-figures-and-graphs-on-google-sheets-with-python
 
-Automates fetching activity data from Strava, updating a Google Sheet with new activity tables, and generating charts (e.g., "Weight over Time") using Python—completely hands-free.
+This project automates fetching activity data from Strava, updating a Google Sheet with new activity tables, and generating charts (e.g., "Weight over Time") using Python—completely hands-free.
 
 It follows this process:
 ![Horizontal workflow: Smart Band → Mi Fitness → Strava → Python App → Google Sheets ...](h-flowchart-diagram.svg)
@@ -71,6 +71,16 @@ To view logs in real-time for the running container:
 ```bash
 docker compose logs -f python-on-gsheets
 ```
+
+## CI/CD Pipeline
+
+The project uses Jenkins for continuous integration and deployment:
+
+- **Trigger**: Gitea webhook triggers Jenkins pipeline on every commit
+- **Build**: Multi-architecture Docker images are built using the build script
+- **Registry**: Images are pushed to a local Docker registry
+- **Deployment**: Watchtower monitors the registry and automatically pulls the latest image, completing the deployment cycle
+
 
 ### Deployment
 1. **Clone the repository**  
