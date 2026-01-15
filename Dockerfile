@@ -21,11 +21,15 @@ WORKDIR /app
 COPY src/ /app/src/
 COPY requirements.txt /app/
 
+ARG VERSION
+LABEL build.version="${VERSION}"
+ENV APP_VERSION="${VERSION}"
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Environment variable that user provides in docker-compose:
-ENV CRON_SCHEDULE="0 6 * * *"
+ENV CRON_SCHEDULE="0 5 * * *"
 
 # Add the script that creates cron job dynamically
 COPY cron-run.sh /app/cron-run.sh

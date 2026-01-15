@@ -16,6 +16,8 @@ if [ ! -f "$APP_SCRIPT" ]; then
     exit 1
 fi
 
+
+echo "Running python-on-gsheets version ${APP_VERSION}"
 echo "Using CRON_SCHEDULE: $CRON_SCHEDULE"
 
 # Clear existing cron file
