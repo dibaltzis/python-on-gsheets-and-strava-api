@@ -27,7 +27,7 @@ def get_activity_name_from_sheet(activity_date, strava_name, sheet_lookup):
         gym_name = row.get("gym")
         if gym_name and gym_name != "-":
             return gym_name
-    elif "Run" in strava_name:
+    elif ("Run" in strava_name) or ("Walk" in strava_name):
         treadmill_name = row.get("treadmill")
         if treadmill_name and treadmill_name != "-":
             return treadmill_name
@@ -53,7 +53,7 @@ def return_activity_data(activity):
         "Calories": calories
     }
 
-    if "Run" in activity.get("name"):
+    if ("Run" in activity.get("name")) or ("Walk" in activity.get("name")):
         activity_base["Distance"] = activity.get("distance")
 
     return activity_base

@@ -70,7 +70,12 @@ if __name__ == "__main__":
         added_count = 0
 
         #get existing dates to avoid duplicates
-        existing_dates_of_activities = [cell.value for cell in graphs_sheet.range("B1:B1000") if cell.value]
+        #existing_dates_of_activities = [cell.value for cell in graphs_sheet.range("B1:B1000") if cell.value]
+        existing_dates_of_activities = [
+            cell.value
+            for cell in graphs_sheet.range("B1:B1000") + graphs_sheet.range("E1:E1000")
+            if cell.value
+        ]
 
         for activity in matched_activities:
             activity_date = datetime.fromisoformat(activity.get("Start Date")).date()
