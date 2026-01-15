@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-REGISTRY_IP="192.168.31.229:5444"
-IMAGE="python-on-gsheets"
+REGISTRY_IP="${REGISTRY:-192.168.31.229:5444}"
+IMAGE="${IMAGE:-python-on-gsheets}"
 VERSION=$(git rev-parse --short=6 HEAD)
 PLATFORMS="linux/amd64,linux/arm64"
 
@@ -11,7 +11,6 @@ echo "Registry: ${REGISTRY_IP}"
 echo "Image: ${IMAGE}"
 echo "Version: ${VERSION}"
 echo "-------------------------------------------"
-
 
 #docker buildx create --name multiarch-builder --driver docker-container --use multiarch-builder
 if ! docker buildx inspect multiarch-builder >/dev/null 2>&1; then
@@ -23,19 +22,17 @@ fi
 docker buildx use multiarch-builder
 docker buildx inspect --bootstrap
 
-
 # === BUILD AND PUSH ===
-docker buildx build --platform "${PLATFORMS}" -t "${REGISTRY_IP}/${IMAGE}:${VERSION}" -t "${REGISTRY_IP}/${IMAGE}:latest" --push .
-
+docker buildx build --platform "${PLATFORMS}" --build-arg VERSION="${VERSION}" -t "${REGISTRY_IP}/${IMAGE}:${VERSION}" -t "${REGISTRY_IP}/${IMAGE}:latest" --push .
 
 echo "✅ Multi-arch image pushed successfully"
 digest=$(docker buildx imagetools inspect ${REGISTRY_IP}/${IMAGE}:${VERSION} 2>/dev/null | grep "Digest:" | awk '{print $2}' || echo "unknown")
 printf "| %-17s %-30s |\n" "Digest:" "$digest"
 
-
 echo "Cleaning up dangling images..."
-docker builder prune -f
+#docker builder prune -f
 
+docker buildx prune --builder multiarch-builder -f
 echo "===================================================="
 echo "|           ✅ Docker Build Summary                |"
 echo "===================================================="
